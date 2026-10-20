@@ -1,0 +1,12 @@
+Illustrative results for fare = Rs 12.34 (1234 paise):
+20000 journeys: paise-total-Rs=246800.00, double-total-Rs=246800.00, difference-Rs=0.00
+500000 journeys: paise-total-Rs=6170000.00, double-total-Rs=6170000.00, difference-Rs=0.00
+3000000 journeys: paise-total-Rs=37020000.00, double-total-Rs=37020000.00, difference-Rs=0.00
+32-bit int multiplication result is not reliable when overflow occurs: implementation-dependent/overflowed value
+
+Important:
+- Integer paise totals are exact as long as long long does not overflow. A long long is required because 3,000,000 * 1234 = 3,702,000,000 paise, greater than INT_MAX.
+- double uses binary floating point; the exact difference may display as 0.00 at two decimal places even if a tiny representation error exists internally. Use setprecision(17) to inspect it.
+- The source intentionally labels the int result as unreliable: signed integer overflow is undefined behaviour in C++, so do not rely on a particular number.
+- Each addition is O(1). int is typically 4 bytes; long long and double typically 8 bytes. int risks overflow, long long risks overflow only at much larger totals, and double can lose exact cent-level precision for sufficiently large values.
+- Compile with -Wall -Wextra. Warnings depend on compiler/version; common warnings include signed/unsigned comparisons and unused variables, not necessarily a warning for every possible overflow.
